@@ -7,17 +7,20 @@ import {
   Button,
   Spin,
   Tag,
-  Slider,
   Empty,
   Pagination,
 } from "antd";
-import { PlusOutlined, DownOutlined } from "@ant-design/icons";
-import { v4 as uuidv4 } from "uuid";
+import {
+  PlusOutlined,
+  DownOutlined,
+  MenuUnfoldOutlined,
+} from "@ant-design/icons";
 
 import ProducstJson from "./data.json";
 import ProductCard from "./productCard";
 import AddProduct from "./AddProduct";
-import TopProducts from "./TopProducts";
+import SideBar from "./SideBar";
+import Filter from "./filter";
 
 function Container() {
   const categories = ["Books", "Clothes", "Bags", "Mobiles"];
@@ -37,6 +40,8 @@ function Container() {
   const [sort, setSort] = useState();
 
   const [ctgy, setCtgy] = useState("");
+
+  const [drawer, setDrawer] = useState(false);
 
   const [priceFilter, setPriceFilter] = useState([20, 1000]);
 
@@ -169,13 +174,38 @@ function Container() {
     window.scrollTo(0, 0);
   };
 
+  const handleDrawer = () => {
+    setDrawer(!drawer);
+  };
+
   return (
     <Col xs={24} lg={24} className="doodle-container">
       <Row justify="center">
         <Col xs={22} md={22} lg={18} className="product-wrapper">
           {/* Header */}
           <Row justify="space-between">
+            <Col xs={3} md={0} lg={0}>
+              <Button
+                type="primary"
+                size="large"
+                onClick={handleDrawer}
+                icon={<MenuUnfoldOutlined />}
+                style={{ marginRight: "1rem" }}
+              />
+              <SideBar
+                categories={categories}
+                data={copyData}
+                handlePriceFilter={handlePriceFilter}
+                handleCategoryView={handleCategoryView}
+                setPriceFilter={setPriceFilter}
+                priceFilter={priceFilter}
+                visible={drawer}
+                handleDrawer={handleDrawer}
+              />
+            </Col>
+
             <h1 className="title">Products</h1>
+
             <Button
               style={{ borderRadius: "5px" }}
               size="large"
@@ -186,6 +216,7 @@ function Container() {
               {" "}
               Add Product
             </Button>
+
             {!refresh ? (
               <AddProduct
                 modal={modal}
@@ -203,46 +234,14 @@ function Container() {
           {/* Container */}
           <Row justify="space-between">
             {/* SideBar */}
-            <Col lg={5} xs={0} className="sidebar">
-              <h3>Categories</h3>
-              <div className="content">
-                <ul className="ctgy-card">
-                  {categories.map((x, i) => (
-                    <li onClick={() => handleCategoryView(x)} key={i}>
-                      {x}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="price-slider">
-                <h1>Filter By Price</h1>
-                <Slider
-                  range
-                  onChange={(e) => setPriceFilter(e)}
-                  defaultValue={priceFilter}
-                  max="1000"
-                />
-                <Row
-                  style={{ marginTop: "1rem" }}
-                  align="middle"
-                  justify="space-between"
-                >
-                  <Button
-                    onClick={() => handlePriceFilter()}
-                    type="primary"
-                    shape="round"
-                  >
-                    Filter
-                  </Button>
-                  <p>Price: {`$${priceFilter[0]} - $${priceFilter[1]}`}</p>
-                </Row>
-              </div>
-
-              <TopProducts
-                data={copyData.filter((x) => x.exclusive === true)}
-              />
-            </Col>
+            <Filter
+              categories={categories}
+              data={copyData}
+              handlePriceFilter={handlePriceFilter}
+              handleCategoryView={handleCategoryView}
+              setPriceFilter={setPriceFilter}
+              priceFilter={priceFilter}
+            />
 
             {/* Product Container */}
             <Col lg={18} xs={24} className="product-container">

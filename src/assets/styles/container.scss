@@ -8,47 +8,47 @@
       font-weight: bold;
       color: $title;
     }
+  }
+}
 
-    .sidebar {
-      h3 {
-        text-transform: uppercase;
-      }
-      .content {
-        border-radius: 5px;
-        background-color: #eeeeee;
+.sidebar {
+  h3 {
+    text-transform: uppercase;
+  }
+  .content {
+    border-radius: 5px;
+    background-color: #eeeeee;
 
-        li {
-          list-style-type: none;
-          padding: 1rem 2rem;
-          border-bottom: 1px solid #dddddd;
-          color: $title1;
-          font-weight: 500;
-          cursor: pointer;
+    li {
+      list-style-type: none;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #dddddd;
+      color: $title1;
+      font-weight: 500;
+      cursor: pointer;
 
-          &:last-child {
-            border: none;
-          }
-
-          &:hover {
-            background-color: #bbbbbb;
-            font-weight: bold;
-          }
-        }
+      &:last-child {
+        border: none;
       }
 
-      .price-slider {
-        margin: 3rem 0;
-        p {
-          margin-bottom: 0;
-        }
-
-        h1 {
-          font-weight: 500;
-          font-size: 14px;
-          margin-bottom: 1rem;
-          text-transform: uppercase;
-        }
+      &:hover {
+        background-color: #bbbbbb;
+        font-weight: bold;
       }
+    }
+  }
+
+  .price-slider {
+    margin: 3rem 0;
+    p {
+      margin-bottom: 0;
+    }
+
+    h1 {
+      font-weight: 500;
+      font-size: 14px;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
     }
   }
 }

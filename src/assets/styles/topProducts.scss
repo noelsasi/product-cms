@@ -1,0 +1,37 @@
+.top-products {
+  margin-top: 2rem;
+
+  h1 {
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+
+  .item {
+    display: flex;
+    border-bottom: 1px solid #dddddd;
+    margin: 1rem 0;
+
+    &:last-child {
+      border: none;
+    }
+
+    h2 {
+      margin-bottom: -5px;
+    }
+
+    .ant-rate {
+      font-size: 12px !important;
+    }
+
+    img {
+      height: 60px;
+      width: 60px;
+      object-fit: cover;
+      margin-right: 1rem;
+      border-radius: 5px;
+      box-shadow: $shadow1;
+    }
+  }
+}

@@ -1,0 +1,50 @@
+.product-container {
+  cursor: pointer;
+
+  .content {
+    .card-wrap {
+      margin-top: 1rem;
+
+      .product-card {
+        margin: 0.5rem 1rem 0.5rem 0;
+        border: 1px solid #dddddd;
+        border-radius: 5px;
+        box-shadow: $shadow1;
+
+        .image {
+          border-bottom: 1px solid #dddddd;
+          img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+          }
+        }
+
+        .body {
+          padding: 5px 0;
+          text-align: center;
+          h3 {
+            margin-bottom: 0;
+            font-weight: bold;
+            color: $title;
+            text-transform: capitalize;
+            margin: 0 auto;
+            width: 10rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          h6 {
+            color: #5a5a5a;
+          }
+        }
+
+        &:hover {
+          box-shadow: $shadow;
+          transition: 0.5s all;
+        }
+      }
+    }
+  }
+}

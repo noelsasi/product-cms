@@ -1,0 +1,21 @@
+$primary: #ec7063;
+$secondary: #212529;
+$shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+$shadow1: 4px 5px 12px -4px rgba(184, 184, 184, 1);
+$title: #212529;
+$title1: #292929;
+
+$breakpoints: (
+  small: 499px,
+  medium: 699px,
+  large: 999px,
+  xlarge: 1399px,
+);
+
+@mixin breakpoint($size) {
+  $breakpoint-value: map-get($breakpoints, $size);
+
+  @media screen and (min-width: $breakpoint-value) {
+    @content;
+  }
+}

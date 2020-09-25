@@ -10,6 +10,7 @@ import {
   Upload,
   Divider,
   Checkbox,
+  Alert,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useStateValue } from "../StateProvider";
@@ -24,6 +25,8 @@ function AddProduct({ modal, handelModal, edit, setLoading, setCtgy }) {
   const [form] = Form.useForm();
 
   const handleOk = (e) => {
+    console.log(fileList);
+
     if (edit) {
       let json = {
         ...e,
@@ -93,7 +96,12 @@ function AddProduct({ modal, handelModal, edit, setLoading, setCtgy }) {
 
   return (
     <>
-      <Modal style={{ top: 50 }} footer={null} visible={modal}>
+      <Modal
+        onCancel={handelModal}
+        style={{ top: 30 }}
+        footer={null}
+        visible={modal}
+      >
         <Col lg={24}>
           <Row justify="center">
             <Col xs={22} lg={16} className="addProduct">
@@ -137,9 +145,21 @@ function AddProduct({ modal, handelModal, edit, setLoading, setCtgy }) {
                 </Form.Item>
 
                 <h3>Upload Product Image</h3>
-                <Upload {...Imageprops}>
+                <Upload accept=".png, .jpg, .jpeg" {...Imageprops}>
                   <Button icon={<UploadOutlined />}>Click to Upload</Button>
                 </Upload>
+
+                {fileList.length > 0 ? (
+                  <Alert
+                    style={{ marginTop: "1rem" }}
+                    message="Sorry, I'm not uploading images anywhere, rather using static image!."
+                    type="warning"
+                    showIcon
+                    closable
+                  />
+                ) : (
+                  ""
+                )}
 
                 <Divider style={{ background: "#bbb" }} />
 

@@ -10,28 +10,26 @@ import {
   Empty,
   Pagination,
 } from "antd";
+
 import {
   PlusOutlined,
   DownOutlined,
   MenuUnfoldOutlined,
 } from "@ant-design/icons";
 
-import ProducstJson from "./data.json";
+import ProducstJson from "../data.json";
 import ProductCard from "./productCard";
 import AddProduct from "./AddProduct";
 import SideBar from "./SideBar";
 import Filter from "./filter";
+import { useStateValue } from "../StateProvider";
 
 function Container() {
-  const categories = ["Books", "Clothes", "Bags", "Mobiles"];
+  const [{ products, copyData }, dispatch] = useStateValue();
 
   const [loading, setLoading] = useState(false);
 
   const [refresh, setRefresh] = useState(false);
-
-  const [products, setProducts] = useState([]);
-
-  const [copyData, setCopyData] = useState([]);
 
   const [modal, setModal] = useState(false);
 
@@ -51,13 +49,16 @@ function Container() {
 
   useEffect(() => {
     fetchProducts();
+    // eslint-disable-next-line
   }, []);
 
   const fetchProducts = () => {
     setLoading(true);
     setTimeout(() => {
-      setProducts(ProducstJson);
-      setCopyData(ProducstJson);
+      dispatch({
+        type: "FETCH_PRODUCT",
+        payload: ProducstJson,
+      });
       setLoading(false);
     }, 1000);
   };
@@ -71,39 +72,6 @@ function Container() {
       ))}
     </Menu>
   );
-
-  const handleAddProducts = (item) => {
-    setLoading(true);
-    const modify = {
-      id: copyData.length.toString(),
-      ...item,
-      image:
-        "https://creativebonito.com/wp-content/uploads/2018/07/Hard-Cover-Book-Mockup.jpg",
-    };
-    setTimeout(() => {
-      const merge = [...copyData, modify];
-      setCtgy("");
-
-      setProducts(merge);
-      setCopyData(merge);
-      setLoading(false);
-    }, 1000);
-  };
-
-  const handleEditItem = (item) => {
-    setLoading(true);
-
-    const copy = copyData;
-    const remove = copy.filter((x) => x.id !== item.id);
-
-    setTimeout(() => {
-      const merge = [...remove, item];
-      setCtgy("");
-      setProducts(merge);
-      setCopyData(merge);
-      setLoading(false);
-    }, 1000);
-  };
 
   const handelModal = (_, item) => {
     setRefresh(true);
@@ -123,25 +91,38 @@ function Container() {
     setSort(e);
 
     setTimeout(() => {
+      let data = [];
       if (e === "0") {
-        let data = products.sort((x, i) => x.price - i.price);
-        setProducts(data);
+        data = products.sort((x, i) => x.price - i.price);
       } else if (e === "1") {
-        let data = products.sort((x, i) => i.price - x.price);
-        setProducts(data);
+        data = products.sort((x, i) => i.price - x.price);
       } else {
-        setProducts(products);
+        return false;
       }
 
       setLoading(false);
+
+      return dispatch({
+        type: "FILTER_PRODUCT",
+        payload: data,
+      });
     }, 500);
   };
 
   const handleCategoryView = (ctgy) => {
+    setLoading(true);
+
     setCtgy(ctgy);
     const copy = copyData;
     const update = copy.filter((x) => x.ctgy === ctgy);
-    setProducts(update);
+
+    setTimeout(() => {
+      dispatch({
+        type: "FILTER_PRODUCT",
+        payload: update,
+      });
+      setLoading(false);
+    }, 500);
 
     setNext(9);
     setSkip(0);
@@ -149,13 +130,27 @@ function Container() {
   };
 
   const handlePriceFilter = () => {
+    setLoading(true);
+
     const copy = copyData;
     const newData = copy.filter(
       (x) =>
         parseInt(x.price) > priceFilter[0] && parseInt(x.price) < priceFilter[1]
     );
 
-    setProducts(newData);
+    setTimeout(() => {
+      dispatch({
+        type: "FILTER_PRODUCT",
+        payload: newData,
+      });
+
+      setLoading(false);
+    }, 500);
+
+    setNext(9);
+    setSkip(0);
+    setCurrent(1);
+    setCtgy("");
   };
 
   const handlePagination = (e) => {
@@ -181,10 +176,10 @@ function Container() {
   return (
     <Col xs={24} lg={24} className="doodle-container">
       <Row justify="center">
-        <Col xs={22} md={22} lg={18} className="product-wrapper">
+        <Col xxl={14} xs={22} md={22} lg={18} className="product-wrapper">
           {/* Header */}
           <Row justify="space-between">
-            <Col xs={3} md={0} lg={0}>
+            <Col xs={3} md={3} lg={0}>
               <Button
                 type="primary"
                 size="large"
@@ -193,8 +188,6 @@ function Container() {
                 style={{ marginRight: "1rem" }}
               />
               <SideBar
-                categories={categories}
-                data={copyData}
                 handlePriceFilter={handlePriceFilter}
                 handleCategoryView={handleCategoryView}
                 setPriceFilter={setPriceFilter}
@@ -221,10 +214,9 @@ function Container() {
               <AddProduct
                 modal={modal}
                 handelModal={handelModal}
-                handleAddProducts={handleAddProducts}
-                handleEditItem={handleEditItem}
-                categories={categories}
                 edit={edit}
+                setLoading={setLoading}
+                setCtgy={setCtgy}
               />
             ) : (
               ""
@@ -235,8 +227,6 @@ function Container() {
           <Row justify="space-between">
             {/* SideBar */}
             <Filter
-              categories={categories}
-              data={copyData}
               handlePriceFilter={handlePriceFilter}
               handleCategoryView={handleCategoryView}
               setPriceFilter={setPriceFilter}
@@ -263,7 +253,9 @@ function Container() {
                         color="magenta"
                         closable
                         onClose={() => {
-                          setProducts(copyData);
+                          dispatch({
+                            type: "RESET",
+                          });
                           setCtgy("");
                         }}
                       >
@@ -295,26 +287,25 @@ function Container() {
                   <Row className="card-wrap">
                     {products.length > 0
                       ? products.slice(skip, next).map((x, i) => (
-                          <Col xs={12} sm={12} md={12} lg={8} key={i}>
+                          <Col xs={22} sm={12} md={12} lg={8} xxl={6} key={i}>
                             <ProductCard handelModal={handelModal} data={x} />
                           </Col>
                         ))
                       : ""}
                   </Row>
-                  {!loading && products.length === 0 ? (
-                    <Row style={{ marginTop: "3rem" }} justify="center">
+
+                  <Row style={{ marginTop: "3rem" }} justify="center">
+                    {!loading && products.length === 0 ? (
                       <Empty description="Sorry, No Products found!" />
-                    </Row>
-                  ) : (
-                    <Row style={{ marginTop: "3rem" }} justify="center">
+                    ) : (
                       <Pagination
                         onChange={handlePagination}
                         current={current}
                         total={products.length}
                         hideOnSinglePage={true}
                       />
-                    </Row>
-                  )}
+                    )}
+                  </Row>
                 </Spin>
               </div>
             </Col>

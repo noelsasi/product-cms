@@ -4,13 +4,11 @@ import Filter from "./filter";
 import { CloseCircleFilled } from "@ant-design/icons";
 
 function SideBar({
-  data,
   visible,
   handleDrawer,
   handleCategoryView,
   setPriceFilter,
   handlePriceFilter,
-  categories,
   priceFilter,
 }) {
   return (
@@ -32,8 +30,6 @@ function SideBar({
     >
       <Filter
         small={"small"}
-        categories={categories}
-        data={data}
         handlePriceFilter={handlePriceFilter}
         handleCategoryView={handleCategoryView}
         setPriceFilter={setPriceFilter}

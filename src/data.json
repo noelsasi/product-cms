@@ -57,14 +57,6 @@
   },
   {
     "id": "8",
-    "image": "https://cdn06.wildcraft.com/web-images/large/styles/JPEUVZ6GEAC/1541160538743/1.jpg",
-    "item": "Back Pack",
-    "price": "266.60",
-    "ctgy": "Bags",
-    "exclusive": false
-  },
-  {
-    "id": "9",
     "image": "https://static.zara.net/photos///2020/I/0/3/p/4873/703/655/2/w/1920/4873703655_1_1_1.jpg?ts=1592237719114",
     "item": "Polo",
     "price": "125.60",
@@ -72,7 +64,7 @@
     "exclusive": true
   },
   {
-    "id": "10",
+    "id": "9",
     "image": "https://static.zara.net/photos///2020/I/0/3/p/4873/703/655/2/w/1920/4873703655_1_1_1.jpg?ts=1592237719114",
     "item": "Blazer",
     "price": "125.60",
@@ -80,7 +72,7 @@
     "exclusive": false
   },
   {
-    "id": "11",
+    "id": "10",
     "image": "https://static.zara.net/photos///2020/I/0/3/p/4873/703/655/2/w/1920/4873703655_1_1_1.jpg?ts=1592237719114",
     "item": "Denim Jeans",
     "price": "125.60",
@@ -88,15 +80,7 @@
     "exclusive": false
   },
   {
-    "id": "12",
-    "image": "https://static.zara.net/photos///2020/I/0/3/p/4873/703/655/2/w/1920/4873703655_1_1_1.jpg?ts=1592237719114",
-    "item": "Tailored Suit",
-    "price": "125.60",
-    "ctgy": "Clothes",
-    "exclusive": false
-  },
-  {
-    "id": "13",
+    "id": "11",
     "image": "https://www.appliancesdirect.co.uk/Images/CUB-X19-BLK_1_Supersize.jpg?versionid=2",
     "item": "OnePlus 8",
     "price": "885.60",
@@ -104,7 +88,7 @@
     "exclusive": false
   },
   {
-    "id": "14",
+    "id": "12",
     "image": "https://www.appliancesdirect.co.uk/Images/CUB-X19-BLK_1_Supersize.jpg?versionid=2",
     "item": "Samsung A50",
     "price": "599.60",
@@ -112,19 +96,11 @@
     "exclusive": false
   },
   {
-    "id": "15",
+    "id": "13",
     "image": "https://www.appliancesdirect.co.uk/Images/CUB-X19-BLK_1_Supersize.jpg?versionid=2",
     "item": "Realme C3",
     "price": "449.60",
     "ctgy": "Mobiles",
     "exclusive": true
-  },
-  {
-    "id": "16",
-    "image": "https://www.appliancesdirect.co.uk/Images/CUB-X19-BLK_1_Supersize.jpg?versionid=2",
-    "item": "Samsung Galaxy S10e",
-    "price": "1199.10",
-    "ctgy": "Mobiles",
-    "exclusive": false
   }
 ]

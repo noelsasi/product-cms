@@ -12,18 +12,14 @@ import {
   Checkbox,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import { useStateValue } from "../StateProvider";
 
 const { Option } = Select;
 
-function AddProduct({
-  modal,
-  handelModal,
-  categories,
-  handleAddProducts,
-  edit,
-  handleEditItem,
-}) {
+function AddProduct({ modal, handelModal, edit, setLoading, setCtgy }) {
   const [fileList, setFilelist] = useState([]);
+
+  const [{ categories, copyData }, dispatch] = useStateValue();
 
   const [form] = Form.useForm();
 
@@ -43,8 +39,40 @@ function AddProduct({
     handelModal();
   };
 
-  const handleCancel = (e) => {
-    handelModal();
+  const handleEditItem = (item) => {
+    setLoading(true);
+
+    const copy = copyData;
+    const remove = copy.filter((x) => x.id !== item.id);
+
+    setTimeout(() => {
+      const merge = [...remove, item];
+      setCtgy("");
+      dispatch({
+        type: "EDIT_PRODUCT",
+        payload: merge,
+      });
+      setLoading(false);
+    }, 500);
+  };
+
+  const handleAddProducts = (item) => {
+    setLoading(true);
+    const modify = {
+      id: copyData.length.toString(),
+      ...item,
+      image:
+        "https://creativebonito.com/wp-content/uploads/2018/07/Hard-Cover-Book-Mockup.jpg",
+    };
+    setTimeout(() => {
+      setCtgy("");
+      dispatch({
+        type: "ADD_PRODUCT",
+        item: modify,
+      });
+
+      setLoading(false);
+    }, 500);
   };
 
   const Imageprops = {
@@ -118,7 +146,7 @@ function AddProduct({
                 <Row justify="space-around">
                   <Button
                     style={{ background: "#ddd", padding: "0 3rem" }}
-                    onClick={handleCancel}
+                    onClick={handelModal}
                   >
                     Cancel
                   </Button>

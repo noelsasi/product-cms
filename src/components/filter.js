@@ -1,16 +1,17 @@
 import React from "react";
 import { Col, Row, Slider, Button } from "antd";
 import TopProducts from "./TopProducts";
+import { useStateValue } from "../StateProvider";
 
 function Filter({
-  data,
   handleCategoryView,
   setPriceFilter,
   handlePriceFilter,
-  categories,
   priceFilter,
   small,
 }) {
+  const [{ categories }] = useStateValue();
+
   return (
     <Col lg={!small ? 5 : 0} xs={!small ? 0 : 24} className="sidebar">
       <h3>Categories</h3>
@@ -50,7 +51,7 @@ function Filter({
         </Row>
       </div>
 
-      <TopProducts data={data.filter((x) => x.exclusive === true)} />
+      <TopProducts />
     </Col>
   );
 }

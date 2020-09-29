@@ -62,7 +62,7 @@ function AddProduct({ modal, handelModal, edit, setLoading, setCtgy }) {
   const handleAddProducts = (item) => {
     setLoading(true);
     const modify = {
-      id: copyData.length.toString(),
+      id: (copyData.length + 1).toString(),
       ...item,
       image:
         "https://creativebonito.com/wp-content/uploads/2018/07/Hard-Cover-Book-Mockup.jpg",
